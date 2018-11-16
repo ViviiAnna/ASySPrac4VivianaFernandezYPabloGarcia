@@ -1,0 +1,373 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>RPL04: Convoluci&oacute;n y correlaci&oacute;n</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-16"><meta name="DC.source" content="ASySPrac4VivianaFernandezYPabloGarcia.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>RPL04: Convoluci&oacute;n y correlaci&oacute;n</h1><!--introduction--><p>Fernandez Santana Viviana Elizabeth</p><p>Garc&iacute;a Morales Pablo</p><p>Grupo: 2MV1</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Objetivos</a></li><li><a href="#2">Introducci&oacute;n</a></li><li><a href="#4">PR04</a></li><li><a href="#8">PR05</a></li><li><a href="#10">Convoluci&oacute;n 3.1.1</a></li><li><a href="#12">Correlacion 3.1.1</a></li><li><a href="#14">Convolucion funci&oacute;n conv 3.1.1</a></li></ul></div><h2 id="1">Objetivos</h2><div><ul><li>Conocer m&eacute;todos b&aacute;sicos de integraci&oacute;n num&eacute;rica</li><li>Manipulaci&oacute;n de instrucciones en MATLAB</li><li>Simular convoluciones y correlaciones de se&ntilde;ales continuas</li><li>Simular convoluciones y correlaciones de se&ntilde;ales discretas</li></ul></div><h2 id="2">Introducci&oacute;n</h2><p>Matlab es una herramienta que nos puede servir de apoyo para la simulaci&oacute;n de operaciones como la convoluci&oacute;n, correlaci&oacute;n y autocorrelaci&oacute;n de dos se&ntilde;ales. Pero, c&oacute;mo se definen estas operaciones?</p><p>Empecemos con la <b>convoluci&oacute;n</b>, existen dos tipos  de convoluciones, para se&ntilde;ales en tiempo continuo y para se&ntilde;ales en tiempo discreto. Bien sabemos la forma de encontrar la convoluci&oacute;n de dos se&ntilde;ales en tiempo continuo:</p><p>Sea: <img src="ASySPrac4VivianaFernandezYPabloGarcia_eq06120165508265560670.png" alt="$$ f(t) $$" style="width:24px;height:15px;"> y <img src="ASySPrac4VivianaFernandezYPabloGarcia_eq11642727236624285047.png" alt="$$ g(t) $$" style="width:23px;height:15px;"></p><p>Su convoluci&oacute;n es: <img src="ASySPrac4VivianaFernandezYPabloGarcia_eq04220010987939017308.png" alt="$$ f(t)*g(t)=\int_{-\infty}^{\infty} f(\tau)g(t-\tau)d\tau $$" style="width:206px;height:34px;"></p><p>Para establecer l&iacute;mites de integraci&oacute;n es necesario analizar las funciones, en caso de que se traten de escalones unitarios, la sustituci&oacute;n de <img src="ASySPrac4VivianaFernandezYPabloGarcia_eq14903837550872241833.png" alt="$$ \tau $$" style="width:8px;height:7px;"> y <img src="ASySPrac4VivianaFernandezYPabloGarcia_eq16809282016195912303.png" alt="$$ t-\tau $$" style="width:31px;height:10px;"> establecen l&iacute;mites de integraci&oacute;n finitos para poder resolver las integrales en el intervalo de tiempo correcto.</p><p>Ahora, en cuanto a convoluci&oacute;n en tiempo discreto, tenemos:</p><p>Sea: <img src="ASySPrac4VivianaFernandezYPabloGarcia_eq13083295221844408981.png" alt="$$ f[n] $$" style="width:23px;height:15px;"> y <img src="ASySPrac4VivianaFernandezYPabloGarcia_eq15113471861571477281.png" alt="$$ g[n] $$" style="width:23px;height:15px;"></p><p>Su convoluci&oacute;n es: <img src="ASySPrac4VivianaFernandezYPabloGarcia_eq07622211834303608906.png" alt="$$ f[n]*g[n]=\sum_{m=-\infty}^{\infty} f[m]g[n-m] $$" style="width:204px;height:41px;"></p><p>Para el caso de la <b>correlaci&oacute;n</b> de igual forma se separan por se&ntilde;ales de tiempo contunuo y tiempo discreto y existen tres m&eacute;todos, veamos los tres casos para tiempo continuo:</p><p>M&eacute;todo 1:</p><p><img src="ASySPrac4VivianaFernandezYPabloGarcia_eq00502199003579278482.png" alt="$$ \Gamma_{fg}(t) =\int_{-\infty}^{\infty} f(t+ \tau)g(\tau)d\tau  $$" style="width:181px;height:34px;"></p><p>M&eacute;todo 2:</p><p><img src="ASySPrac4VivianaFernandezYPabloGarcia_eq07199237891371369857.png" alt="$$ \Gamma_{fg}(t) =\int_{-\infty}^{\infty} f(\tau)g(\tau-t)d\tau  $$" style="width:181px;height:34px;"></p><p>M&eacute;todo 3(usando convoluci&oacute;n):</p><p><img src="ASySPrac4VivianaFernandezYPabloGarcia_eq13546780123080880635.png" alt="$$ \Gamma_{fg} =f(t)*g(-t)  $$" style="width:114px;height:16px;"></p><p>Para el caso del tiempo discreto tenemos:</p><p>M&eacute;todo 1:</p><p><img src="ASySPrac4VivianaFernandezYPabloGarcia_eq12375147829983457848.png" alt="$$ \Gamma_{fg}(t) =\sum_{m=-\infty}^{\infty} f[n+m]g[m]  $$" style="width:178px;height:41px;"></p><p>M&eacute;todo 2:</p><p><img src="ASySPrac4VivianaFernandezYPabloGarcia_eq15360040376727123717.png" alt="$$ \Gamma_{fg}(t) =\sum_{m=-\infty}^{\infty} f[m]g[m-n]  $$" style="width:178px;height:41px;"></p><p>M&eacute;todo 3(usando convoluci&oacute;n):</p><p><img src="ASySPrac4VivianaFernandezYPabloGarcia_eq08375555863440578949.png" alt="$$ \Gamma_{fg} =f[n]*g[-n]  $$" style="width:114px;height:16px;"></p><h2 id="4">PR04</h2><p>Ejemplo PR04:</p><pre class="codeinput">figure;
+subplot(1,3,1);
+syms <span class="string">t</span>;
+f=piecewise(t&lt;0,0,0&lt;t&lt;1,exp(-t),1&lt;t,0);
+fplot(f,[-0.25,1.25],<span class="string">'r'</span>);
+grid <span class="string">on</span>;
+title(<span class="string">'f(t)'</span>);
+
+subplot(1,3,2);
+g=piecewise(t&lt;-1,0,-1&lt;t&lt;1,t,1&lt;t,0);
+fplot(g,[-2,2],<span class="string">'r'</span>);
+grid <span class="string">on</span>;
+title(<span class="string">'g(t)'</span>);
+
+t1=-1:0.01:0;
+t2=0:0.01:1;
+t3=1:0.01:2;
+subplot(1,3,3);
+plot(t1,t1-1+2*(exp(-t1-1)));
+hold <span class="string">on</span>;
+plot(t2,t2-1+((1/exp(1))*(2-t2)));
+plot(t3,(1/exp(1))*(2-t3));
+grid <span class="string">on</span>;
+title(<span class="string">'f(t)*g(t)'</span>);
+axis([-1 2 -0.4 0.4]);
+</pre><img vspace="5" hspace="5" src="ASySPrac4VivianaFernandezYPabloGarcia_01.png" alt=""> <p>Otra forma de hacer lo es con funciones y para la comparaci&oacute;n de graficas. El siguiente c&oacute;digo es una modificaci&oacute;n del c&oacute;digo de Lathi (C&oacute;digo del cap&iacute;tulo 2, M2.4 p&aacute;g 161), ejemplo de convoluciones continuas</p><pre class="language-matlab">
+<span class="keyword">function</span> convconm(x,h)
+  figure (1) <span class="comment">% Se crea una figura para hacer las gr&aacute;ficas</span>
+  dtau = 0.005; <span class="comment">% Base de los rectangulos para realizar la integral </span>
+  tau = -2:dtau:9; <span class="comment">% Intervalo de visualizaci&oacute;n del resultado</span>
+  ti = 0; <span class="comment">% Indice para el vector de resultados</span>
+  tvec = -2:.1:9; <span class="comment">% traslaciones de t, cuantas integrales se calulan  </span>
+  y = NaN*zeros(1, length (tvec)); <span class="comment">% Resultados de acuerdo a cuantos t</span>
+  <span class="keyword">for</span> t = tvec, <span class="comment">% Cantidad de traslaciones</span>
+      ti = ti+1; <span class="comment">% Indice para guardar el resultado (indice del tiempo)</span>
+      xh = x(t-tau).*h(tau); <span class="comment">% resultado de la multiplicaci&oacute;n </span>
+      lxh = length(xh); <span class="comment">% longitud del resultado</span>
+      y(ti) = sum(xh.*dtau); <span class="comment">% Base por altura, aproximaci&oacute;n de la integral</span>
+      subplot (2,1,1), <span class="comment">% gr&aacute;fica de 2 x 1 (primera)</span>
+      plot(tau, h(tau), <span class="string">'r-'</span>, tau, x(t-tau), <span class="string">'g--'</span>, t, 0, <span class="string">'ob'</span>); <span class="comment">%graficas </span>
+      axis ([tau(1) tau(end) -2.0 2.5]); <span class="comment">% l&iacute;mites de los ejes</span>
+      patch([tau(1:end-1); tau(1:end-1); tau(2:end); tau(2:end)],<span class="keyword">...</span>
+      [zeros(1,lxh-1);xh(1:end-1);xh(2:end);zeros(1,lxh-1)],<span class="keyword">...</span>
+      [.8 .8 .8], <span class="string">'edgecolor'</span>, <span class="string">'none'</span>);
+      xlabel(<span class="string">'\tau'</span>); <span class="comment">% Texto del eje X</span>
+      legend(<span class="string">'f(\tau)'</span>, <span class="string">'g(t-\tau)'</span>,<span class="string">'t'</span>,<span class="string">'f(\tau)g(t-\tau)'</span>)<span class="comment">% Caja de Texto  </span>
+      subplot (2, 1, 2)  <span class="comment">% gr&aacute;fica de 2 x 1 (segunda)</span>
+      plot (tvec, y, <span class="string">'k'</span>, tvec (ti), y(ti), <span class="string">'ok'</span>);
+      xlabel (<span class="string">'t'</span>); 
+      ylabel (<span class="string">'y(t) = \int f(\tau)g(t-\tau) d\tau'</span>);
+      axis ([tau(1) tau(end) -3.0 2.0]); <span class="comment">% l&iacute;mites del eje</span>
+      grid; <span class="comment">% malla</span>
+      drawnow; <span class="comment">% efecto de movimiento continuo</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+</pre><p>Si ejecutamos las siguientes instrucciones en el Command Window y el directorio de trabajo es el mismo donde se encuentra la funci&oacute;n <i>convconm</i> tendr&eacute;mos el siguiente resultado</p><pre class="codeinput">f = @(t) exp(-t).*(t&gt;=0 &amp; t&lt;1);
+g = @(t) t.*(t&gt;=-1 &amp; t&lt;1);
+convconm(f,g);
+</pre><img vspace="5" hspace="5" src="ASySPrac4VivianaFernandezYPabloGarcia_02.png" alt=""> <h2 id="8">PR05</h2><p>Ejemplo correlaci&oacute;n PR05 e:</p><pre class="codeinput">f = @(t) 1*((t&gt;=3&amp;t&lt;4)-(t&gt;=0&amp;t&lt;3));
+g = @(t) 1*((t&gt;=0&amp;t&lt;3) - (t&gt;=3&amp;t&lt;4));
+convconm(f,g);
+</pre><img vspace="5" hspace="5" src="ASySPrac4VivianaFernandezYPabloGarcia_03.png" alt=""> <h2 id="10">Convoluci&oacute;n 3.1.1</h2><p>Ejemplo convoluci&oacute;n entre c y d en tiempo discreto:</p><pre class="language-matlab">
+<span class="keyword">function</span> convdisc(x1,x2)
+    Tam1 = size(x1(1,:));
+    Tam2 = size(x2(1,:));
+    T1 = Tam1(2);
+    T2 = Tam2(2);
+    T3 = T1+T2-1;
+    vec1 = zeros(1,T1+2*T2-2);
+    vec2 = zeros(1,T1+2*T2-2);
+    Tec2 = -(T2-1):(T1+T2-2);
+    size(vec2);
+    size(Tec2);
+    x3=zeros(2,T3);
+    x3(1,:)=0:T3-1;
+    x3(1,:)=x3(1,:)+x1(1,1)+x2(1,1);
+    vec1(1,T2:T2+T1-1)=x1(2,:);
+    figure (1)
+    hFig = figure(1);
+    set(hFig, <span class="string">'Position'</span>, [0 0 1000 1000])
+    filename = <span class="string">'testAnimated.gif'</span>;
+    ttt=1;
+    <span class="keyword">for</span> m=0:T1+T2-2
+        vec2(1,1+m:T2+m)=fliplr(x2(2,:));
+        x3(2,m+1)=sum(vec1.*vec2);
+        subplot(4,1,4)
+        stem(x3(1,:),x3(2,:),<span class="string">'r'</span>,<span class="string">'LineWidth'</span>,3)
+        axis([Tec2(1),T1+2*T2-2,  min(x3(2,:))-1 max(x3(2,:))+1])
+        ylabel(<span class="string">'h[n]'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        xlabel(<span class="string">'n'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        grid <span class="string">on</span>
+        subplot(4,1,1)
+        stem(x2(1,:),x2(2,:),<span class="string">'k'</span>,<span class="string">'LineWidth'</span>,3)
+        ylabel(<span class="string">'d[m]'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        xlabel(<span class="string">'m'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        title(<span class="string">'CONVOLUCI&oacute;N'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        grid <span class="string">on</span>
+        axis([Tec2(1),T1+2*T2-2, min(x2(2,:))-1 max(x2(2,:))+1])
+        subplot(4,1,2)
+        stem(x1(1,:),x1(2,:),<span class="string">'b'</span>,<span class="string">'LineWidth'</span>,3)
+        ylabel(<span class="string">'c[m]'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        xlabel(<span class="string">'m'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        grid <span class="string">on</span>
+        axis([Tec2(1),T1+2*T2-2, min(x1(2,:))-1 max(x1(2,:))+1])
+        subplot(4,1,3)
+        stem(Tec2,vec2(1,:),<span class="string">'g'</span>,<span class="string">'LineWidth'</span>,3)
+        axis([Tec2(1),T1+2*T2-2,min(vec2)-1, max(vec2)+1 ])
+        ylabel(<span class="string">'d[n-m]'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        xlabel(<span class="string">'m'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+        grid <span class="string">on</span>
+        drawnow;
+        pause(0.4)
+        vec2 = zeros(1,T1+2*T2-2);
+        frame = getframe(hFig); 
+        im = frame2im(frame); 
+        [imind,cm] = rgb2ind(im,256); 
+        <span class="comment">% Write to the GIF File </span>
+        <span class="keyword">if</span> ttt == 1 
+          imwrite(imind,cm,filename,<span class="string">'gif'</span>, <span class="string">'Loopcount'</span>,inf); 
+        <span class="keyword">else</span> 
+          imwrite(imind,cm,filename,<span class="string">'gif'</span>,<span class="string">'WriteMode'</span>,<span class="string">'append'</span>); 
+        <span class="keyword">end</span>
+        ttt=ttt+1;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+</pre><pre class="codeinput">n=-4:4;
+c=[0 -9 -4 -1 0 1 4 9 0];
+d=[0 0 4 2 0 2 4 0 0];
+convdisc([n;c],[n;d])
+</pre><img vspace="5" hspace="5" src="ASySPrac4VivianaFernandezYPabloGarcia_04.png" alt=""> <h2 id="12">Correlacion 3.1.1</h2><p>Ejemplo correlaci&oacute;n entre c y d en tiempo discreto:</p><pre class="codeinput">nf=-3:3;
+f=@(n) n.*(n&gt;=-3 &amp; n&lt;=3);
+ng=-2:2;
+g=@(n) -2.*n.*(n&gt;=-2 &amp; n&lt;=0)+2.*n.*(n&gt;=1 &amp; n&lt;=2);
+convdisc( [nf;f(nf)], [ng;g(ng)] );
+<span class="comment">%</span>
+</pre><img vspace="5" hspace="5" src="ASySPrac4VivianaFernandezYPabloGarcia_05.png" alt=""> <h2 id="14">Convolucion funci&oacute;n conv 3.1.1</h2><p>Ejemplo convoluci&oacute;n entre c y d en tiempo discreto usando la funci&oacute;n conv de matlab:</p><pre class="codeinput">figure;
+corr=conv(c,d)
+stem(-8:8, corr);
+</pre><pre class="codeoutput">
+corr =
+
+  Columns 1 through 13
+
+     0     0     0   -36   -34   -12   -20   -40     0    40    20    12    34
+
+  Columns 14 through 17
+
+    36     0     0     0
+
+</pre><img vspace="5" hspace="5" src="ASySPrac4VivianaFernandezYPabloGarcia_06.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% RPL04: Convolución y correlación
+% Fernandez Santana Viviana Elizabeth
+%
+% García Morales Pablo
+%
+% Grupo: 2MV1
+
+%%% Objetivos
+% * Conocer métodos básicos de integración numérica
+% * Manipulación de instrucciones en MATLAB
+% * Simular convoluciones y correlaciones de señales continuas
+% * Simular convoluciones y correlaciones de señales discretas
+
+%%% Introducción
+% Matlab es una herramienta que nos puede servir de apoyo para la
+% simulación de operaciones como la convolución, correlación y autocorrelación de dos
+% señales. Pero, cómo se definen estas operaciones? 
+%
+% Empecemos con la *convolución*, existen dos tipos  de convoluciones, para
+% señales en tiempo continuo y para señales en tiempo discreto. Bien
+% sabemos la forma de encontrar la convolución de dos señales en tiempo
+% continuo:
+%
+% Sea: 
+% $$ f(t) $$ y $$ g(t) $$
+%
+% Su convolución es:
+% $$ f(t)*g(t)=\int_{-\infty}^{\infty} f(\tau)g(t-\tau)d\tau $$
+%
+% Para establecer límites de integración es necesario analizar las
+% funciones, en caso de que se traten de escalones unitarios, la
+% sustitución de $$ \tau $$ y $$ t-\tau $$ establecen límites de
+% integración finitos para poder resolver las integrales en el intervalo de
+% tiempo correcto.
+% 
+% Ahora, en cuanto a convolución en tiempo discreto, tenemos:
+%
+% Sea: $$ f[n] $$ y $$ g[n] $$
+%
+% Su convolución es:
+% $$ f[n]*g[n]=\sum_{m=-\infty}^{\infty} f[m]g[n-m] $$
+%
+% Para el caso de la *correlación* de igual forma se separan por señales de
+% tiempo contunuo y tiempo discreto y existen tres métodos, veamos los tres casos
+% para tiempo continuo:
+%
+% Método 1:
+%
+% $$ \Gamma_{fg}(t) =\int_{-\infty}^{\infty} f(t+ \tau)g(\tau)d\tau  $$
+%
+% Método 2:
+%
+% $$ \Gamma_{fg}(t) =\int_{-\infty}^{\infty} f(\tau)g(\tau-t)d\tau  $$
+%
+% Método 3(usando convolución):
+%
+% $$ \Gamma_{fg} =f(t)*g(-t)  $$
+%
+% Para el caso del tiempo discreto tenemos:
+%
+% Método 1:
+%
+% $$ \Gamma_{fg}(t) =\sum_{m=-\infty}^{\infty} f[n+m]g[m]  $$
+%
+% Método 2:
+%
+% $$ \Gamma_{fg}(t) =\sum_{m=-\infty}^{\infty} f[m]g[m-n]  $$
+%
+% Método 3(usando convolución):
+%
+% $$ \Gamma_{fg} =f[n]*g[-n]  $$
+%%
+%%% PR04
+% Ejemplo PR04:
+figure;
+subplot(1,3,1);
+syms t;
+f=piecewise(t<0,0,0<t<1,exp(-t),1<t,0);
+fplot(f,[-0.25,1.25],'r');
+grid on;
+title('f(t)');
+
+subplot(1,3,2);
+g=piecewise(t<-1,0,-1<t<1,t,1<t,0);
+fplot(g,[-2,2],'r');
+grid on;
+title('g(t)');
+
+t1=-1:0.01:0;
+t2=0:0.01:1;
+t3=1:0.01:2;
+subplot(1,3,3);
+plot(t1,t1-1+2*(exp(-t1-1)));
+hold on;
+plot(t2,t2-1+((1/exp(1))*(2-t2)));
+plot(t3,(1/exp(1))*(2-t3));
+grid on;
+title('f(t)*g(t)');
+axis([-1 2 -0.4 0.4]);
+%%
+% Otra forma de hacer lo es con funciones y para la comparación de
+% graficas.
+% El siguiente código es una modificación del código de Lathi 
+% (Código del capítulo 2, M2.4 pág 161), ejemplo de convoluciones 
+% continuas
+%
+% <include>convconm.m</include>
+%
+%%
+% Si ejecutamos las siguientes instrucciones en el Command Window y el
+% directorio de trabajo es el mismo donde se encuentra la función _convconm_
+% tendrémos el siguiente resultado
+% 
+f = @(t) exp(-t).*(t>=0 & t<1);
+g = @(t) t.*(t>=-1 & t<1);
+convconm(f,g);
+%%
+%%% PR05 
+% Ejemplo correlación PR05 e:
+f = @(t) 1*((t>=3&t<4)-(t>=0&t<3));
+g = @(t) 1*((t>=0&t<3) - (t>=3&t<4));
+convconm(f,g);
+%%
+%%% Convolución 3.1.1 
+% Ejemplo convolución entre c y d en tiempo discreto:
+%
+% <include>convdisc.m</include>
+%
+n=-4:4;
+c=[0 -9 -4 -1 0 1 4 9 0];
+d=[0 0 4 2 0 2 4 0 0];
+convdisc([n;c],[n;d])
+%%
+%%% Correlacion 3.1.1 
+% Ejemplo correlación entre c y d en tiempo discreto:
+nf=-3:3;
+f=@(n) n.*(n>=-3 & n<=3);
+ng=-2:2;
+g=@(n) -2.*n.*(n>=-2 & n<=0)+2.*n.*(n>=1 & n<=2);
+convdisc( [nf;f(nf)], [ng;g(ng)] );
+%
+%%
+%%% Convolucion función conv 3.1.1 
+% Ejemplo convolución entre c y d en tiempo discreto usando la función conv de matlab:
+figure;
+corr=conv(c,d)
+stem(-8:8, corr);
+
+%%
+
+##### SOURCE END #####
+--></body></html>
